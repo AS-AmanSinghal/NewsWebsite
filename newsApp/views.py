@@ -23,3 +23,8 @@ def about(request):
 
 def panel(request):
     return render(request, 'admin/home.html')
+
+
+def newsList(request):
+    news = LatestNews.objects.all()
+    return render(request, 'admin/newsList.html', {'newsData': news})
