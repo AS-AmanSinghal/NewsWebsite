@@ -23,7 +23,8 @@ from NewsWebsite.settings import STATIC_ROOT, MEDIA_ROOT
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'', include('newsApp.urls')),
-    url(r'', include('LatestNews.urls'))
+    url(r'', include('LatestNews.urls')),
+    url(r'', include('category.urls'))
 ]
 
 if settings.DEBUG:
