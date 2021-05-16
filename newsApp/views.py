@@ -1,6 +1,8 @@
 from django.shortcuts import render
 
 from LatestNews.models import LatestNews
+from category.models import Category
+from subcategory.models import SubCategory
 from .models import NewsAppModel
 
 
@@ -11,7 +13,11 @@ def home(request):
     siteName = NewsAppModel.objects.get(pk=1)
     news = LatestNews.objects.all().order_by('-pk')
 
-    return render(request, 'frontend/home.html', {'site': siteName, 'latestNews': news})
+    category = Category.objects.all()
+    subcategory = SubCategory.objects.all()
+
+    return render(request, 'frontend/home.html', {'site': siteName, 'latestNews': news, 'category': category
+        , 'subcategory': subcategory})
 
 
 def about(request):
