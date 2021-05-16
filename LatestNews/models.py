@@ -10,6 +10,7 @@ class LatestNews(models.Model):
     date = models.CharField(max_length=12)
     image = models.TextField(max_length=2048)
     writer = models.CharField(max_length=50)
+    imageName = models.CharField(max_length=100, default='')
 
     def __str__(self):
         return self.name

@@ -1,3 +1,6 @@
+import datetime
+
+from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render, redirect
 
 from newsApp.models import NewsAppModel
@@ -15,12 +18,37 @@ def NewsDetail(request, name):
 
 
 def addNews(request):
+    print("-------------------")
+    now = datetime.datetime.now()
+
+    print()
     if request.method == 'POST':
         response = request.POST
-        data = LatestNews(name=response.get('name'), short_text=response.get('short_text'),
-                          description=response.get('description'), date=response.get('date'),
-                          image=response.get('image'), writer=response.get('writer'))
-        data.save()
+
+        image = request.FILES['image']
+        fileSystem = FileSystemStorage()
+
+        if str(image.content_type).startswith('image'):
+            if image.size < 2000:
+                fileName = fileSystem.save(image.name, image)
+                url = fileSystem.url(fileName)
+                data = LatestNews(name=response.get('name'), short_text=response.get('short_text'),
+                                  description=response.get('description'), date=response.get('date'),
+                                  image=url, writer=response.get('writer'), imageName=fileName)
+
+                data.save()
+            else:
+                print("SIZE ERROR")
+        else:
+            print("ERROR")
         return redirect('AddNews')
 
     return render(request, 'admin/addnews.html')
+
+
+def newsDelete(request, pk):
+    data = LatestNews.objects.get(pk=pk)
+    fs = FileSystemStorage()
+    fs.delete(data.imageName)
+    data.delete()
+    return redirect('newsList')
