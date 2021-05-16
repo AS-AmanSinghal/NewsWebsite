@@ -9,7 +9,7 @@ from .models import NewsAppModel
 def home(request):
     # siteName = NewsAppModel.objects.filter(pk=2)
     siteName = NewsAppModel.objects.get(pk=1)
-    news = LatestNews.objects.all()
+    news = LatestNews.objects.all().order_by('-pk')
 
     return render(request, 'frontend/home.html', {'site': siteName, 'latestNews': news})
 

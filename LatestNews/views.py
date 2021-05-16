@@ -29,7 +29,7 @@ def addNews(request):
         fileSystem = FileSystemStorage()
 
         if str(image.content_type).startswith('image'):
-            if image.size < 2000:
+            if image.size < 20000000:
                 fileName = fileSystem.save(image.name, image)
                 url = fileSystem.url(fileName)
                 data = LatestNews(name=response.get('name'), short_text=response.get('short_text'),
@@ -52,3 +52,19 @@ def newsDelete(request, pk):
     fs.delete(data.imageName)
     data.delete()
     return redirect('newsList')
+
+
+def newsEdit(request, pk):
+    data = LatestNews.objects.get(pk=pk)
+
+    if request.method == 'POST':
+        response = request.POST
+        latesNews = LatestNews.objects.get(pk=pk)
+        latesNews.name = response.get('name')
+        latesNews.short_text = response.get('short_text')
+        latesNews.description = response.get('description')
+        latesNews.date = response.get('date')
+        latesNews.writer = response.get('writer')
+        latesNews.save()
+        return redirect('newsList')
+    return render(request, 'admin/addnews.html', {'newsData': data})

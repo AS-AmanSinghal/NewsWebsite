@@ -1,58 +1,79 @@
 {% extends 'admin/master.html' %}
 {% load static %}
-
+{% block headblock %}
+    <script src="{% static 'ckeditor/ckeditor/ckeditor.js' %}" type="text/javascript"></script>
+{% endblock %}
 {% block mainBlock %}
     <div class="block">
-
         <!-- Horizontal Form Content -->
-        <form action="{% url 'AddNews' %}" method="post" enctype="multipart/form-data"
-              class="form-horizontal form-bordered">
-            {% csrf_token %}
-            <div class="form-group">
-                <label class="col-md-3 control-label">Title</label>
-                <div class="col-md-9">
-                    <input type="text" name="name" class="form-control" placeholder="Enter Title..">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-3 control-label">Short Description</label>
-                <div class="col-md-9">
-                    <textarea name="short_text" rows="5" class="form-control"
-                              placeholder="Enter Short Description.."></textarea>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-3 control-label">Description</label>
-                <div class="col-md-9">
-                    <textarea name="description" rows="5" class="form-control"
-                              placeholder="Enter Description.."></textarea>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-3 control-label">Date</label>
-                <div class="col-md-9">
-                    <input type="date" name="date" class="form-control">
-                </div>
-            </div>
 
+        {% csrf_token %}
+        {% if newsData.pk %}
+            <form action="{% url 'newsEdit' pk=newsData.pk %}" method="post" enctype="multipart/form-data"
+                  class="form-horizontal form-bordered">
             <div class="form-group">
-                <label class="col-md-3 control-label">Image</label>
                 <div class="col-md-9">
-                    <input type="file" name="image" class="form-control">
+                    <input type="hidden" name="pk" value="{{ newsData.pk }}">
                 </div>
             </div>
-            <div class="form-group">
-                <label class="col-md-3 control-label">Writter</label>
-                <div class="col-md-9">
-                    <input type="text" name="writer" class="form-control" placeholder="Enter Writer..">
-                </div>
+        {% else %}
+            <form action="{% url 'AddNews' %}" method="post" enctype="multipart/form-data"
+                  class="form-horizontal form-bordered">
+        {% endif %}
+        {% csrf_token %}
+        <div class="form-group">
+            <label class="col-md-3 control-label">Title</label>
+            <div class="col-md-9">
+                <input type="text" name="name" class="form-control" placeholder="Enter Title.."
+                       value="{{ newsData.name }}">
             </div>
-            <div class="form-group form-actions">
-                <div class="col-md-9 col-md-offset-3">
-                    <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-save"></i> Submit</button>
-                    <button type="reset" class="btn btn-sm btn-warning"><i class="fa fa-repeat"></i> Reset</button>
-                </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label">Short Description</label>
+            <div class="col-md-9">
+                    <textarea id="short_txt" name="short_text" rows="5" class="form-control"
+                              placeholder="Enter Short Description..">{{ newsData.short_text }}</textarea>
+                <script>
+                    CKEDITOR.replace('short_txt');
+                </script>
             </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label">Description</label>
+            <div class="col-md-9">
+                    <textarea id="description" name="description" rows="5" class="form-control"
+                              placeholder="Enter Description..">{{ newsData.description }}</textarea>
+                <script>
+                    CKEDITOR.replace('description');
+                </script>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label">Date</label>
+            <div class="col-md-9">
+                <input type="date" name="date" class="form-control" value="{{ newsData.date }}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-3 control-label">Image</label>
+            <div class="col-md-9">
+                <input type="file" name="image" class="form-control" value="{{ newsData.imageName }}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label">Writter</label>
+            <div class="col-md-9">
+                <input type="text" name="writer" class="form-control" placeholder="Enter Writer.."
+                       value="{{ newsData.writer }}">
+            </div>
+        </div>
+        <div class="form-group form-actions">
+            <div class="col-md-9 col-md-offset-3">
+                <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-save"></i> Submit</button>
+                <button type="reset" class="btn btn-sm btn-warning"><i class="fa fa-repeat"></i> Reset</button>
+            </div>
+        </div>
         </form>
         <!-- END Horizontal Form Content -->
     </div>
