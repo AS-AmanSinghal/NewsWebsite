@@ -24,7 +24,8 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'', include('newsApp.urls')),
     url(r'', include('LatestNews.urls')),
-    url(r'', include('category.urls'))
+    url(r'', include('category.urls')),
+    url(r'', include('subcategory.urls'))
 ]
 
 if settings.DEBUG:
