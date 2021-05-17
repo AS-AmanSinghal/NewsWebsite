@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.contrib.auth import authenticate, login, logout
+from django.shortcuts import render, redirect
 
 from LatestNews.models import LatestNews
 from category.models import Category
@@ -28,9 +29,32 @@ def about(request):
 
 
 def panel(request):
+    # for authenticated (check login)
+    if not request.user.is_authenticated:
+        return redirect('Login')
+
     return render(request, 'admin/home.html')
 
 
 def newsList(request):
     news = LatestNews.objects.all()
     return render(request, 'admin/newsList.html', {'newsData': news})
+
+
+def loginPage(request):
+    if request.method == 'POST':
+        response = request.POST
+        username = response.get('username')
+        password = response.get('password')
+
+        user = authenticate(username=username, password=password)
+
+        if user != None:
+            login(request, user)
+            return redirect('admin')
+    return render(request, 'frontend/login/login.html')
+
+
+def logoutPage(request):
+    logout(request)
+    return redirect('Login')

@@ -6,5 +6,7 @@ urlpatterns = [
     url(r'^$', views.home, name='home'),
     url(r'^about/$', views.about, name='about'),
     url(r'^panel/$', views.panel, name='admin'),
-    url(r'^panel/newsList/$', views.newsList, name='newsList')
+    url(r'^panel/newsList/$', views.newsList, name='newsList'),
+    url(r'^login/$', views.loginPage, name='Login'),
+    url(r'^logout/$', views.logoutPage, name='LogOut')
 ]
