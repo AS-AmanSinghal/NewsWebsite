@@ -3,7 +3,9 @@ import datetime
 from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render, redirect
 
+from category.models import Category
 from newsApp.models import NewsAppModel
+from subcategory.models import SubCategory
 from .models import LatestNews
 
 
@@ -11,10 +13,16 @@ from .models import LatestNews
 
 
 def NewsDetail(request, name):
-    news = LatestNews.objects.get(name=name)
-    site = NewsAppModel.objects.get(pk=1)
+    siteName = NewsAppModel.objects.get(pk=1)
+    category = Category.objects.all()
+    subcategory = SubCategory.objects.all()
+    news = LatestNews.objects.all().order_by('-pk')
 
-    return render(request, 'frontend/news_detail.html', {'site': site, 'news': news})
+    showNews = LatestNews.objects.get(name=name)
+
+    return render(request, 'frontend/news_detail.html',
+                  {'site': siteName, 'latestNews': news, 'news': showNews, 'category': category
+                      , 'subcategory': subcategory})
 
 
 def addNews(request):
