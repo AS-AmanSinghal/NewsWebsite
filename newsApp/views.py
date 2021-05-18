@@ -58,3 +58,26 @@ def loginPage(request):
 def logoutPage(request):
     logout(request)
     return redirect('Login')
+
+def settingPage(request):
+    data = NewsAppModel.objects.get(pk=1)
+    if request.method == 'POST':
+        response = request.POST
+        name = response.get('name')
+        about = response.get('about')
+        fb = response.get('facebook')
+        twitter = response.get('twitter')
+        youtube = response.get('youtube')
+        contactNumber = response.get('mobile_number')
+
+        data = NewsAppModel.objects.get(pk=1)
+        data.name = name
+        data.about = about
+        data.fb = fb
+        data.twitter = twitter
+        data.youtube = youtube
+        data.contactNumber = contactNumber
+        data.save()
+        return redirect('admin')
+
+    return render(request, 'admin/settings.html', {'data': data})

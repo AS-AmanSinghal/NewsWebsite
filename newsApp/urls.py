@@ -8,5 +8,6 @@ urlpatterns = [
     url(r'^panel/$', views.panel, name='admin'),
     url(r'^panel/newsList/$', views.newsList, name='newsList'),
     url(r'^login/$', views.loginPage, name='Login'),
-    url(r'^logout/$', views.logoutPage, name='LogOut')
+    url(r'^logout/$', views.logoutPage, name='LogOut'),
+    url(r'^panel/settings/$', views.settingPage, name='settingPage')
 ]
