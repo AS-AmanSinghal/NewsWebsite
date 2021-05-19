@@ -1,0 +1,50 @@
+{% extends 'admin/master.html' %}
+{% load static %}
+
+{% block mainBlock %}
+    <div class="block full">
+        <div class="block-title">
+            <h2><strong>News</strong> List</h2>
+        </div>
+        <div class="table-responsive">
+            <table id="example-datatable" class="table table-vcenter table-condensed table-bordered">
+                <thead>
+                <tr>
+                    <th class="text-center">ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Website</th>
+                    <th>Message</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for i in data %}
+                    <tr>
+                        <td class="text-center">{{ i.pk }}</td>
+                        <td><a href="javascript:void(0)">{{ i.name }}</a></td>
+                        <td>{{ i.email }}</td>
+                        <td>{{ i.website }}</td>
+                        <td>{{ i.message|safe }}</td>
+                        <td class="text-center">
+                            <div class="btn-group">
+                                <a href="{% url 'contactDelete' pk=i.pk %}" data-toggle="tooltip" title="Delete"
+                                   class="btn btn-xs btn-danger"><i class="fa fa-times">Delete</i></a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block footerBlock %}
+    <!-- Load and execute javascript code used only in this page -->
+    <script src="{% static 'admin/js/pages/tablesDatatables.js' %}"></script>
+    <script>$(function () {
+        TablesDatatables.init();
+    });</script>
+
+{% endblock %}

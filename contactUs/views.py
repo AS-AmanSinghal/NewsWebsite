@@ -1,4 +1,4 @@
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 
 from .models import ContactUs
 
@@ -15,3 +15,18 @@ def contactForm(request):
         data = ContactUs(name=name, email=email, website=website, message=message)
         data.save()
     return redirect('contactUs')
+
+
+def contactList(request):
+    if not request.user.is_authenticated:
+        return redirect('Login')
+
+    data = ContactUs.objects.all()
+
+    return render(request, 'admin/contactList.html', {'data': data})
+
+
+def contactDelete(request, pk):
+    data = ContactUs.objects.filter(pk=pk)
+    data.delete()
+    return redirect('contactList')
