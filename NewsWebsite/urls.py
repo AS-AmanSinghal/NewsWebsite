@@ -25,7 +25,8 @@ urlpatterns = [
     url(r'', include('newsApp.urls')),
     url(r'', include('LatestNews.urls')),
     url(r'', include('category.urls')),
-    url(r'', include('subcategory.urls'))
+    url(r'', include('subcategory.urls')),
+    url(r'', include('contactUs.urls'))
 ]
 
 if settings.DEBUG:

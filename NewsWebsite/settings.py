@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'newsApp',
     'LatestNews',
     'category',
-    'subcategory'
+    'subcategory',
+    'contactUs'
 ]
 
 MIDDLEWARE = [

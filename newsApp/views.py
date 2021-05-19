@@ -81,3 +81,9 @@ def settingPage(request):
         return redirect('admin')
 
     return render(request, 'admin/settings.html', {'data': data})
+
+
+def contactUs(request):
+    siteName = NewsAppModel.objects.get(pk=1)
+
+    return render(request, 'frontend/contact.html', {'site': siteName})
