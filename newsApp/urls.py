@@ -10,5 +10,6 @@ urlpatterns = [
     url(r'^login/$', views.loginPage, name='Login'),
     url(r'^logout/$', views.logoutPage, name='LogOut'),
     url(r'^panel/settings/$', views.settingPage, name='settingPage'),
-    url(r'^contact/$', views.contactUs, name='contactUs')
+    url(r'^contact/$', views.contactUs, name='contactUs'),
+    url(r'^panel/changepassword/$', views.changePassword, name='changePassword')
 ]

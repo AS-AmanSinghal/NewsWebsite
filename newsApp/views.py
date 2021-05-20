@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 
 from LatestNews.models import LatestNews
@@ -87,3 +88,20 @@ def contactUs(request):
     siteName = NewsAppModel.objects.get(pk=1)
 
     return render(request, 'frontend/contact.html', {'site': siteName})
+
+
+def changePassword(request):
+    if request.method == 'POST':
+        response = request.POST
+        oldPassword = response.get('old_password')
+        newPassword = response.get('new_password')
+
+        user = authenticate(username=request.user.username, password=oldPassword)
+        if user != None:
+            user = User.objects.get(username=request.user)
+            user.set_password(newPassword)
+            user.save()
+            logout(request)
+            return redirect('Login')
+
+    return render(request, 'admin/changepassword.html')
