@@ -11,5 +11,6 @@ urlpatterns = [
     url(r'^logout/$', views.logoutPage, name='LogOut'),
     url(r'^panel/settings/$', views.settingPage, name='settingPage'),
     url(r'^contact/$', views.contactUs, name='contactUs'),
-    url(r'^panel/changepassword/$', views.changePassword, name='changePassword')
+    url(r'^panel/changepassword/$', views.changePassword, name='changePassword'),
+    url(r'^registration/$', views.registrationPage, name='registrationPage')
 ]

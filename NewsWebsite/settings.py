@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'LatestNews',
     'category',
     'subcategory',
-    'contactUs'
+    'contactUs',
+    'manageUsers'
 ]
 
 MIDDLEWARE = [

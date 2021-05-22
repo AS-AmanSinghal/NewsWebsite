@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 
 from LatestNews.models import LatestNews
 from category.models import Category
+from manageUsers.models import ManageUsers
 from subcategory.models import SubCategory
 from .models import NewsAppModel
 
@@ -105,3 +106,19 @@ def changePassword(request):
             return redirect('Login')
 
     return render(request, 'admin/changepassword.html')
+
+
+def registrationPage(request):
+    if request.method == 'POST':
+        response = request.POST
+        username = response.get('username')
+        email = response.get('email')
+        password = response.get('password')
+
+        user = len(User.objects.filter(username=username))
+
+        if user == 0 and len(User.objects.filter(email=email)) == 0:
+            User.objects.create_user(username=username, email=email, password=password)
+            user = ManageUsers(name=username, email=email)
+            user.save()
+    return redirect('Login')
